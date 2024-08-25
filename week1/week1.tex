@@ -197,8 +197,8 @@
     \hline
 \end{tabular}
 \subsubsection{查看文件状态}
-git status 文件名\quad 用于查看单个文件的状态\par
-git status 可查看当前文件夹所有文件的状态\par
+\verb|git status 文件名|\quad 用于查看单个文件的状态\par
+\verb|git status| 可查看当前文件夹所有文件的状态\par
 也可使用通配符,如: git status *.tex \\
 \includegraphics[width=1\textwidth]{status1.png}\\
 \includegraphics[width=1\textwidth]{status2.png}
@@ -206,13 +206,19 @@ git status 可查看当前文件夹所有文件的状态\par
 \subsection{添加和提交文件}
 \subsubsection{将文件添加到暂存区}
 
-git add 文件名 \quad 添加单个文件\par 
-git add . 可将当前文件夹的所有文件添加到暂存区\par
-也可使用通配符\\
+\verb|git add 文件名| \quad 添加单个文件\par 
+\verb|git add .| 可将当前文件夹的所有文件添加到暂存区\par
+也可使用通配符\par
+补充：\verb|git rm --cached 文件名| \quad 可以将文件取消暂存\\
 \includegraphics[width=1\textwidth]{git add.png}
 \subsubsection{将暂存区的文件提交到本地仓库}
-git commit -m "提交的信息" \quad 将暂存区的文件提交到本地仓库
-注意：如果不加 -m "提交的信息"，git会进入vim编辑器，让你添加提交的信息
+\verb|git commit -m "提交的信息"| \quad 将暂存区的文件提交到本地仓库\\
+\includegraphics[width=1\textwidth]{commit1.png}\par
+注意：如果不加 -m "提交的信息"，git会进入vim编辑器，让你添加提交的信息。
 
-
+\subsection{查看提交信息}
+\verb|git log| \quad 查看全部信息\par
+\verb|git log --oneline| \quad 查看简要信息\\
+\includegraphics[width=1\textwidth]{git log.png}\\
+\includegraphics[width=1\textwidth]{git log2.png}
 \end{document}
