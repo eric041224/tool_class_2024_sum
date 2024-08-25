@@ -5,6 +5,7 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{fancyhdr}
+\usepackage{fancyvrb}
 
 
 \title{Week 1}
@@ -14,6 +15,7 @@
 \pagestyle{fancy}
 \fancyhead[L]{ }
 \setlength{\headheight}{27pt}
+
 
 \lstset{
     numbers=left,
@@ -49,10 +51,10 @@
 
 \subsection{下划线}\verb|\underline{}|
 
-\subsection{添加图片}
-先引入graphicx包，再用\verb|\includegraphics{}| 
-
-\subsection{添加图片标题} 
+\subsection{添加图片及其标题} 
+\subsubsection{添加图片} 
+先引入graphicx包，再用\verb|\includegraphics{此处填图片的地址}| 
+\subsubsection{添加标题} 
 先将图片放在figure中，再在图片的下面加\verb|\caption{}|
 例：
 
@@ -169,6 +171,19 @@
 \[
     E=mc^2
 \]
+
+\subsection{如何在latex中展示代码} 
+\subsubsection{行内代码} 
+\begin{lstlisting}
+  \verb|此处填入代码|
+\end{lstlisting}
+
+\subsubsection{代码块} 
+\begin{Verbatim}
+    \begin{lstlisting}
+        此处填写代码
+    \end{lstlisting}
+\end{Verbatim}
 
 \newpage
 \section{Git}
