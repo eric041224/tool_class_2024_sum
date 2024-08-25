@@ -4,10 +4,27 @@
 \usepackage[margin=1.5in]{geometry}
 \usepackage{float}
 \usepackage{listings}
+\usepackage{fancyhdr}
+
 
 \title{Week 1}
 \author{左昊天}
 \date{\today}
+
+\pagestyle{fancy}
+\fancyhead[L]{ }
+\setlength{\headheight}{27pt}
+
+\lstset{
+    numbers=left,
+    numberstyle=\tiny,
+    frame=shadowbox,
+    rulesepcolor= \color{ red!20!green!20!blue!20},
+    escapeinside=``,
+    xleftmargin=2em,aboveskip=1em,
+    framexleftmargin=2em,
+    breaklines=true
+}
 
 \begin{document}
 
@@ -46,13 +63,14 @@
 \end{figure}
 
 \textbf{遇到的问题：}
+\bigskip
 
 （1）添加图片后，不显示图片
 
 原因：图片过大导致无法显示
 
 解决办法：通过\verb|\includegraphics[width=0.2\textwidth]{photo.jpg}|等比例设置图片的宽高。
-
+\bigskip
 
 （2）图片出现在了章节前面。
 
@@ -94,6 +112,17 @@
 \end{enumerate}
 
 \subsection{表格} 
+\begin{lstlisting}
+    \begin{tabular}{|p{3cm}|c|c|}
+        \hline
+        单元格1 & 单元格2 & 单元格3 \\
+        \hline  \hline
+        单元格4 & 单元格5 & 单元格6 \\
+        \hline
+        单元格7 & 单元格8 & 单元格9 \\
+        \hline
+    \end{tabular}
+\end{lstlisting}
 \begin{tabular}{|p{3cm}|c|c|}
     \hline
     单元格1 & 单元格2 & 单元格3 \\
@@ -102,7 +131,14 @@
     \hline
     单元格7 & 单元格8 & 单元格9 \\
     \hline
-\end{tabular}
+\end{tabular}\bigskip
+
+\textbf{解释：}\\
+1.\verb|p{3cm}|设置列宽\\
+2.\verb|\hline|加横线\\
+3.|p{3cm}|c|c|中的c表示该列居中对齐（centering）
+
+
 
 \subsection{公式}
 \subsubsection{行内公式}
@@ -133,4 +169,7 @@
 \[
     E=mc^2
 \]
+
+\newpage
+\section{Git}
 \end{document}
