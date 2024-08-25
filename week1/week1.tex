@@ -1,0 +1,136 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[margin=1.5in]{geometry}
+\usepackage{float}
+\usepackage{listings}
+
+\title{Week 1}
+\author{左昊天}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Latex}
+
+\subsection{章节}
+章节：\verb|\section{}|
+
+子章节：\verb|\subsection{}|
+
+三级章节：\verb|\subsubsection{}|
+
+\subsection{加粗}\verb|\textbf{}|
+\subsection{斜体italic}
+\verb|\textit{}|  
+ 
+\textcolor{red}{注：中文的斜体和英文的斜体样式不一样}
+
+例：\textit{中文样式}\qquad\textit{English version}
+
+\subsection{下划线}\verb|\underline{}|
+
+\subsection{添加图片}
+先引入graphicx包，再用\verb|\includegraphics{}| 
+
+\subsection{添加图片标题} 
+先将图片放在figure中，再在图片的下面加\verb|\caption{}|
+例：
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{photo.jpg}
+    \caption{举例}
+\end{figure}
+
+\textbf{遇到的问题：}
+
+（1）添加图片后，不显示图片
+
+原因：图片过大导致无法显示
+
+解决办法：通过\verb|\includegraphics[width=0.2\textwidth]{photo.jpg}|等比例设置图片的宽高。
+
+
+（2）图片出现在了章节前面。
+
+原因：figure是浮动体，系统会自动决定浮动体的放置位置
+
+解决办法：加入宏包\verb|\usepackage{float}|，并在\verb|\begin{figure}|后加上[H]属性，强制控制浮动位置。即\verb|\begin{figure}[H]|
+
+
+\subsection{改变文字颜色} 
+加入宏包\verb|\usepackage{xcolor}|，使用 \verb|\textcolor{color}{想输入的文字}| 控制颜色。
+
+\subsection{列表} 
+\subsubsection{无序列表} 
+\textbf{代码：}
+\begin{lstlisting}
+    \begin{itemize}
+        \item
+        \item
+    \end{itemize}
+\end{lstlisting}
+\qquad \textbf{例：}
+\begin{itemize}
+    \item 项1
+    \item 项2
+\end{itemize}
+
+\subsubsection{有序列表} 
+\textbf{代码：}
+\begin{lstlisting}
+    \begin{enumerate}
+        \item
+        \item
+    \end{enumerate}
+    \end{lstlisting}
+\qquad \textbf{例：}
+\begin{enumerate}
+    \item 项1
+    \item 项2
+\end{enumerate}
+
+\subsection{表格} 
+\begin{tabular}{|p{3cm}|c|c|}
+    \hline
+    单元格1 & 单元格2 & 单元格3 \\
+    \hline  \hline
+    单元格4 & 单元格5 & 单元格6 \\
+    \hline
+    单元格7 & 单元格8 & 单元格9 \\
+    \hline
+\end{tabular}
+
+\subsection{公式}
+\subsubsection{行内公式}
+代码：\verb|$此处填写公式$|
+
+例：$F=ma$ , $E=mc^2$
+\subsubsection{单独一行的公式}
+有两种写法：
+
+\textbf{写法一：}
+\begin{lstlisting}
+    \begin{equation}
+        此处填写公式
+    \end{equation}
+\end{lstlisting}
+\qquad 例：
+\begin{equation}
+    F=ma
+\end{equation}
+
+\textbf{写法二：}
+\begin{lstlisting}
+    \[
+        此处填写公式
+    \]
+\end{lstlisting}
+\qquad 例：
+\[
+    E=mc^2
+\]
+\end{document}
