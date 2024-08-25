@@ -139,7 +139,7 @@
 \textbf{解释：}\\
 1.\verb|p{3cm}|设置列宽\\
 2.\verb|\hline|加横线\\
-3.|p{3cm}|c|c|中的c表示该列居中对齐（centering）
+3.|p\verb|{|3cm\verb|}|c|c|中的c表示该列居中对齐（centering）
 
 
 
@@ -190,12 +190,15 @@
 \section{Git}
 \subsection{查看文件状态}
 \subsubsection{文件状态}
-\begin{tabular}{|c|c|c|c|}
-    \hline
-    Untrack & Unmodified & Modified & Staged\\
-    未跟踪 & 未修改 & 已修改 & 已暂存\\
-    \hline
-\end{tabular}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Untrack & Unmodified & Modified & Staged\\
+        未跟踪 & 未修改 & 已修改 & 已暂存\\
+        \hline
+    \end{tabular}
+\end{table}
 \subsubsection{查看文件状态}
 \verb|git status 文件名|\quad 用于查看单个文件的状态\par
 \verb|git status| 可查看当前文件夹所有文件的状态\par
@@ -214,11 +217,53 @@
 \subsubsection{将暂存区的文件提交到本地仓库}
 \verb|git commit -m "提交的信息"| \quad 将暂存区的文件提交到本地仓库\\
 \includegraphics[width=1\textwidth]{commit1.png}\par
-注意：如果不加 -m "提交的信息"，git会进入vim编辑器，让你添加提交的信息。
+注意：如果不加 -m "提交的信息"，git会进入vim编辑器，让你添加提交的信息。\\
+\includegraphics[width=1\textwidth]{commit2-1.png}\\
+\includegraphics[width=1\textwidth]{commit2-2.png}\par
 
 \subsection{查看提交信息}
 \verb|git log| \quad 查看全部信息\par
 \verb|git log --oneline| \quad 查看简要信息\\
 \includegraphics[width=1\textwidth]{git log.png}\\
 \includegraphics[width=1\textwidth]{git log2.png}
+
+\subsection{远程仓库的相关操作}
+\subsubsection{拉取}
+\verb|git pull|\quad 将远程仓库的内容下载到本地仓库中
+\subsubsection{推送}
+\verb|git push|\quad 将本地仓库的内容上传到远程仓库\\
+\includegraphics[width=1\textwidth]{push.png}
+
+\subsection{查询所有操作的信息}
+\verb|git reflog|\\
+\includegraphics[width=1\textwidth]{reflog.png}\par
+\textbf{可利用此功能撤销任意操作}
+\subsection{版本回退}
+版本回退有三种：\par
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{5cm}|}
+        \hline
+        类型 & 工作区 & 暂存区 & 备注\\
+        \hline
+        git reset --soft & √ & √ & 回到指定版本，但此版本之后的文件依然存在，只是没提交\\
+        \hline
+        git reset --hard & × & × & 回到指定版本，此版本后的所有文件全部被删除\\
+        \hline
+        git reset --mixed & √ & × & 与soft类型的区别在于需要重新将文件添加到暂存区\\
+        \hline
+    \end{tabular}
+\end{table}
+其中，√表示此区域的文件不会被删除，×表示此区域的文件会被删除。\par
+并且类型后面需要加上版本ID。
+\subsection{查看差异}
+\verb|git diff|\quad 默认展示工作区和暂存区的差异\par
+\verb|git diff HAED|\quad 展示工作区与仓库的差异\par
+\verb|git diff --cached|\quad 展示暂存区与仓库的差异\par
+\verb|git diff 版本ID1 版本ID2|\quad 展示两个版本之间的差异\par
+\textbf{注：在这些命令后加上文件名，那么就只展示这个文件的差异}
+\subsection{删除文件}
+将暂存的文件从工作区删除后，需要git add 的命令\par
+也可使用git rm直接同时删除工作区和暂存区的文件\par
+\textbf{但必须提交才能删除仓库的文件}
 \end{document}
