@@ -256,14 +256,40 @@
 \end{table}
 其中，√表示此区域的文件不会被删除，×表示此区域的文件会被删除。\par
 并且类型后面需要加上版本ID。
+
 \subsection{查看差异}
 \verb|git diff|\quad 默认展示工作区和暂存区的差异\par
 \verb|git diff HAED|\quad 展示工作区与仓库的差异\par
 \verb|git diff --cached|\quad 展示暂存区与仓库的差异\par
 \verb|git diff 版本ID1 版本ID2|\quad 展示两个版本之间的差异\par
 \textbf{注：在这些命令后加上文件名，那么就只展示这个文件的差异}
+
 \subsection{删除文件}
 将暂存的文件从工作区删除后，需要git add 的命令\par
 也可使用git rm直接同时删除工作区和暂存区的文件\par
-\textbf{但必须提交才能删除仓库的文件}
+\textbf{但必须提交才能删除仓库的文件}\\
+\includegraphics[width=1\textwidth]{rm1.png}\\
+\includegraphics[width=1\textwidth]{rm2.png}
+
+\subsection{分支的创建与删除}
+\subsubsection{创建}
+\verb|git branch 分支名|\par
+
+
+\subsubsection{删除}
+\verb|git branch -d 分支名|\quad 已经合并时用这个删除 \par
+\verb|git branch -D 分支名|\quad 没有合并时用这个强制删除\\
+\includegraphics[width=1\textwidth]{delete.png}
+
+\subsection{分支的查看与切换}
+\subsubsection{查看}
+\verb|git branch|\\
+\includegraphics[width=1\textwidth]{branch.png}
+\subsubsection{切换}
+\verb|git switch 分支名|\\
+\includegraphics[width=1\textwidth]{switch.png}
+
+
+\subsection{分支的合并}
+\verb|git merge 分支名|\quad 该命令是将指定的分支合并到当前所在的分支上。git会自动进行合并，但当两个分支产生冲突时，需要自己手动合并。
 \end{document}
