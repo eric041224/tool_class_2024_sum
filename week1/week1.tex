@@ -1,4 +1,4 @@
-\documentclass[UTF8]{ctexart}
+\documentclass[UTF8,a4paper]{ctexart}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage[margin=1.5in]{geometry}
@@ -8,17 +8,25 @@
 \usepackage{fancyvrb} 
 \usepackage{tabularx}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}%用于插入超链接
+\usepackage{wallpaper}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage[absolute]{textpos}
+\usetikzlibrary{calc}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
 
 
-\title{Week 1}
-\author{左昊天}
-\date{\today}
 
+\definecolor{color1}{RGB}{10,80,179}
 \pagestyle{fancy}
 \fancyhead[L]{ }
 \setlength{\headheight}{27pt}
 
-
+\definecolor{GradientTop}{RGB}{0,0,255}
+\definecolor{GradientBottom}{RGB}{255,0,0}
+\colorlet{GradientMid}{blue!50!red}
 
 \lstset{
     numbers=left,
@@ -31,15 +39,64 @@
     breaklines=true
 }
 
-\begin{document}
+\hypersetup{
+    colorlinks=true,            % 激活链接颜色，去掉链接边框
+    urlcolor=color1           % 外部URL链接颜色
+}
 
-\maketitle
+\begin{document}
+%封面
+\ThisCenterWallPaper{1.02}{background.png} 
+\begin{textblock}{5}(1,2)
+    % 设置字号为20pt
+    \fontsize{15}{24}\selectfont
+    \color{white}
+    \begin{turn}{270}
+         \qquad 取则行远
+        \end{turn}
+        \begin{turn}{270}
+            海纳百川 
+            \end{turn}
+    
+    \end{textblock}
 \begin{center}
-   \href{https://github.com/eric041224/tool_class_2024_sum}{Github 仓库地址}
+    %logo
+    \begin{tikzpicture}[remember picture, overlay]
+        % 绘制一个矩形，并设置其位置在页面的右上角
+        \draw[fill=blue] (current page.north east) rectangle (current page.north west);
+        % 在矩形中插入图片，并设置与右上角的距离
+        \node[anchor=north east, xshift=-1cm, yshift=-2cm] at (current page.north east) {
+            \includegraphics[width=6cm]{logo.png}
+        };
+    \end{tikzpicture}
+
+\begin{textblock}{5}(1,24)
+    
+    \fontsize{120}{24}\selectfont
+    \color{color1}
+    Week1
+       
+    
+    \end{textblock}
+
+\begin{textblock}{5}(14.5,24)
+    
+    \fontsize{19}{24}\selectfont
+    \color{color1}
+    \raggedleft
+    左昊天\\
+    2024-08-29 \\
+    \href{https://github.com/eric041224/tool_class_2024_sum}{Github 仓库地址}\\ 
+    
+    \end{textblock}
+
+   
 \end{center}
+
 \thispagestyle{empty}
 
 \newpage
+\color{black}
 \section{Latex}
 \setcounter{page}{1} %从这开始页面编号
 \subsection{章节}
@@ -296,7 +353,6 @@
 \subsubsection{切换}
 \verb|git switch 分支名|\\
 \includegraphics[width=1\textwidth]{switch.png}
-
 
 \subsection{分支的合并}
 \verb|git merge 分支名|\quad 该命令是将指定的分支合并到当前所在的分支上。git会自动进行合并，但当两个分支产生冲突时，需要自己手动合并。\\
