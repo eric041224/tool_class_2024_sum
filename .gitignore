@@ -1,4 +1,4 @@
-week1/week1.log
-week1/week1.aux
-week1/week1.synctex.gz
-week1/week1.out
+*.log
+*.aux
+*.synctex.gz
+*.out
