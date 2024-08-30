@@ -120,7 +120,7 @@
 \subsubsection{添加图片} 
 先引入graphicx包，再用\verb|\includegraphics{此处填图片的地址}| 
 \subsubsection{添加标题} 
-先将图片放在figure中，再在图片的下面加\verb|\caption{}|
+先将图片放在figure环境中，再在图片的下面加\verb|\caption{}|
 例：
 
 \begin{figure}[H]
@@ -244,6 +244,7 @@
 \end{lstlisting}
 
 \subsubsection{代码块} 
+先引入listings宏包
 \begin{Verbatim}
     \begin{lstlisting}
         此处填写代码
@@ -320,7 +321,9 @@
     \end{tabular}
 \end{table}
 其中，√表示此区域的文件不会被删除，×表示此区域的文件会被删除。\par
-并且类型后面需要加上版本ID。
+并且类型后面需要加上版本ID。\\
+\includegraphics[width=1\textwidth]{reset1.png}\\
+\includegraphics[width=1\textwidth]{reset2.png}
 
 \subsection{查看差异}
 \verb|git diff|\quad 默认展示工作区和暂存区的差异\par
@@ -342,7 +345,7 @@
 
 
 \subsubsection{删除}
-\verb|git branch -d 分支名|\quad 已经合并时用这个删除 \par
++\verb|git branch -d 分支名|\quad 已经合并时用这个删除 \par
 \verb|git branch -D 分支名|\quad 没有合并时用这个强制删除\\
 \includegraphics[width=1\textwidth]{delete.png}
 
