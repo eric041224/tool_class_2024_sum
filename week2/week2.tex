@@ -12,6 +12,7 @@
 \usepackage{tikz}
 \usepackage{lipsum}
 \usepackage{rotating}
+\usepackage{multirow}
 \usepackage[absolute]{textpos}
 \usetikzlibrary{calc}
 \setlength{\TPHorizModule}{1cm}
@@ -21,7 +22,7 @@
 
 \definecolor{color1}{RGB}{10,80,179}
 \pagestyle{fancy}
-\fancyhead[L]{ }
+\fancyhead[L]{\url{https://github.com/eric041224/tool_class_2024_sum}}
 \setlength{\headheight}{27pt}
 
 \definecolor{GradientTop}{RGB}{0,0,255}
@@ -124,6 +125,13 @@
 \includegraphics[width=1\textwidth]{./pictures/新建多个.png}\\
 \includegraphics[width=1\textwidth]{./pictures/新建多个2.png}
 
+\subsubsection{新建多级文件夹：}
+\begin{lstlisting}
+    mkdir -p 文件夹名1/文件夹名2/文件夹名3
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/多级.png}\\
+\includegraphics[width=0.7\textwidth]{./pictures/多级2.png}
+
 \subsection{将命令一行一行写入脚本文件并执行}
 用echo逐行添加命令，再用\verb|./semester|执行文件。\par
 \textbf{注：>会覆盖文件内容，>>用于在文件末尾追加内容}\\
@@ -141,14 +149,72 @@ grep用于查找符合条件的行并输出\par
 \includegraphics[width=1\textwidth]{./pictures/4.2.png}
 \end{center}
 
-\subsection{变量的输入输出}
+\subsection{输入输出}
 \verb|read 变量名| \quad 可将用户输入内容赋值给变量\par
-echo输出的字符串中用\verb|$name|表示变量\\
+echo输出的字符串中用\verb|$变量名|表示变量\\
 \includegraphics[width=1\textwidth]{./pictures/变量输入输出1.png}\par
+echo -n 为不换行输出\\
+示例：
+\begin{lstlisting}
+    #!/bin/bash
+
+echo "请输入用户名:"
+read name
+echo -n "您好，$name"
+echo "！！！"
+
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/变量输入输出3.png}\par
 \textbf{遇到的问题：}\par
+
 一开始会报错\\
 \includegraphics[width=1\textwidth]{./pictures/变量输入输出2.png}\par
 原因：shell脚本中，命令和参数之间必须有空格。即echo和"输出的内容"间需有空格。
+
+\subsection{循环}
+\subsubsection{for循环}
+写法一：
+\begin{lstlisting}
+    for (( 表达式1;表达式2;表达式3 )) ; do
+    命令
+    done
+\end{lstlisting}
+
+写法二：
+\begin{lstlisting}
+for i in {1..10}
+do echo $i 
+done
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/for2.png}\par
+
+\subsubsection{while循环}
+\begin{lstlisting}
+    while[[$变量1 -lt $变量2]]do
+    命令
+    done
+\end{lstlisting}
+shell中比较数值的操作符：\\
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        操作符 & 含义\\
+        \hline
+        -eq & 等于\\
+        \hline
+        -ne & 不等于\\
+        \hline
+        -ge & 大于等于\\
+        \hline
+        -le & 小于等于\\
+        \hline
+        -gt & 大于\\
+        \hline
+        -lt & 小于\\
+        \hline
+    \end{tabular}
+\end{table}
 \subsection{猜字游戏}
 \begin{lstlisting}
     #!/bin/bash
@@ -165,8 +231,54 @@ echo输出的字符串中用\verb|$name|表示变量\\
         echo "猜大了"
     fi
     done
-
 \end{lstlisting}
 \includegraphics[width=1\textwidth]{./pictures/game.png}\par
+
+\subsection{编写两个 bash 函数 marco 和 polo 执行下面的操作。 每当你执行 marco 时，当前的工作目录应当以某种形式保存，当执行 polo 时，无论现在处在什么目录下，都应当 cd 回到当时执行 marco 的目录。 为了方便 debug，你可以把代码写在单独的文件 marco.sh 中，并通过 source marco.sh 命令，（重新）加载函数。}
+代码：
+\begin{lstlisting}
+    #!/bin/bash
+
+marco(){
+	echo "$(pwd)" > C:/Users/19355/Desktop/大二暑假/系统开发工具基础/1/tool_class_2024_sum/week2/history.log
+	echo "已保存目录"
+}
+
+polo(){
+	cd "$(cat  C:/Users/19355/Desktop/大二暑假/系统开发工具基础/1/tool_class_2024_sum/week2/history.log)"
+}
+\end{lstlisting}\par
+\textbf{解释：}\\
+1、\verb|$()|为命令替换符，可将内容替换为括号中命令执行后的内容。\\
+2、\verb|cat 文件地址|\quad 用于打开文件并输出文件内容\\
+运行截图：\\
+\includegraphics[width=1\textwidth]{./pictures/8.png}
+
+\section{Vim}
+\subsection{vim中的不同模式以及进入方式}
+\begin{tabular}{c|c}
+    
+    模式 & 进入方式\\
+    \hline
+    normal & vim打开文件后默认进入的模式\\
+    \hline
+    \multirow{8}{*}{insert} & 在normal下有多重方式进入。如输入i,在光标之前开始输入\\ 
+    & a 光标之后开始输入\\ 
+    & o 下方插入一行开始输入\\
+    & s 删除当前光标字符，开始输入\\
+    & I 从本行开头输入\\
+    & A 从本行结尾输入\\
+    & O 上方插入一行开始输入\\
+    & S 删除当前行并输入\\ 
+    \hline
+    command & 在normal下输入:进入\\
+    \hline
+    visual & 在normal下输入v进入\\
+\end{tabular}
+
+\subsection{vim中的不同模式以及进入方式}
+\subsection{退出vim的方式}
+在normal模式下输入:wq 为保存并退出\par
+:q为直接退出
 
 \end{document}
