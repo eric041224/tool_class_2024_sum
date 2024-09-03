@@ -276,9 +276,60 @@ polo(){
     visual & 在normal下输入v进入\\
 \end{tabular}
 
-\subsection{vim中的不同模式以及进入方式}
 \subsection{退出vim的方式}
-在normal模式下输入:wq 为保存并退出\par
-:q为直接退出
+在normal模式下输入\verb|:wq| 为保存并退出\par
+\verb|:q|为直接退出\par
+\verb|:q!|为强制退出
 
+\subsection{搜索}
+在命令行模式下，用\quad \verb|/要搜索的单词|\quad 可以使光标跳到该单词前面
+
+\subsection{cw}
+在normal模式下，输入\verb|cw|可以删除光标后的一个单词并进入insert模式。
+
+\subsection{替换}
+（在命令行模式下输入）\par
+格式：
+\begin{lstlisting}
+    {作用范围}s/{目标}/{替换}/{替换标志}
+\end{lstlisting}\par
+如：
+\begin{lstlisting}
+    %s/sort/array/g
+\end{lstlisting}\par
+作用范围：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    输入内容 & 替换方式\\
+    \hline
+    \verb|%| & 全局替换\\
+    \hline
+    \verb|.|或不输入 & 当前行替换\\
+    \hline
+    行号1,行号2 & 指定行替换（从行号1到行号2）\\
+    \hline
+\end{tabular}\\
+注：在visual模式下输入\verb|：|后会自动输入\verb|'<,'>| 它表示作用范围是当前选定的内容
+\end{table}
+
+\subsection{跳转行}
+\verb|行数j| 用于光标向下多少行,如5j表示光标向下5行\par
+\verb|行数k| 用于光标向上多少行
+
+\subsection{重复操作命令与撤销操作命令}
+重复操作： 在normal模式下输入\verb|.|\par
+撤销操作： 在normal模式下输入u
+
+\subsection{通过vimrc文件自定义vim}
+\begin{lstlisting}
+    syntax on %打开语法高亮
+    set number %显示行号
+    set relativenumber %开启相对行号
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/passage.png}
+开启相对行号后，vim会自动计算其他行与当前行的相对行差，方便在跳转时直接输入移动的行数。
+
+\section{}
 \end{document}
