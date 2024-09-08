@@ -1,0 +1,272 @@
+\documentclass[UTF8,a4paper]{ctexart}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[margin=1.5in]{geometry}
+\usepackage{float}
+\usepackage{listings} 
+\usepackage{fancyhdr} %用于调整页眉的样式
+\usepackage{fancyvrb} 
+\usepackage{tabularx}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}%用于插入超链接
+\usepackage{wallpaper}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage[absolute]{textpos}
+\usetikzlibrary{calc}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+
+
+
+\definecolor{color1}{RGB}{10,80,179}
+\pagestyle{fancy}
+\fancyhead[L]{\url{https://github.com/eric041224/tool_class_2024_sum}}
+\setlength{\headheight}{27pt}
+
+\definecolor{GradientTop}{RGB}{0,0,255}
+\definecolor{GradientBottom}{RGB}{255,0,0}
+\colorlet{GradientMid}{blue!50!red}
+
+\lstset{
+    numbers=left,
+    numberstyle=\tiny,
+    frame=shadowbox,
+    rulesepcolor= \color{ red!20!green!20!blue!20},
+    escapeinside=``,
+    xleftmargin=2em,aboveskip=1em,
+    framexleftmargin=2em,
+    breaklines=true
+}
+
+\hypersetup{
+    colorlinks=true,            % 激活链接颜色，去掉链接边框
+    urlcolor=color1           % 外部URL链接颜色
+}
+
+\begin{document}
+%封面
+\ThisCenterWallPaper{1.02}{background.png} 
+\begin{textblock}{5}(1,2)
+    % 设置字号为20pt
+    \fontsize{15}{24}\selectfont
+    \color{white}
+    \begin{turn}{270}
+         \qquad 取则行远
+        \end{turn}
+        \begin{turn}{270}
+            海纳百川 
+            \end{turn}
+    
+    \end{textblock}
+\begin{center}
+    %logo
+    \begin{tikzpicture}[remember picture, overlay]
+        % 绘制一个矩形，并设置其位置在页面的右上角
+        \draw[fill=blue] (current page.north east) rectangle (current page.north west);
+        % 在矩形中插入图片，并设置与右上角的距离
+        \node[anchor=north east, xshift=-1cm, yshift=-2cm] at (current page.north east) {
+            \includegraphics[width=6cm]{logo.png}
+        };
+    \end{tikzpicture}
+
+\begin{textblock}{5}(1,24)
+    
+    \fontsize{120}{24}\selectfont
+    \color{color1}
+    Week3
+       
+    
+    \end{textblock}
+
+\begin{textblock}{5}(14.5,24)
+    
+    \fontsize{19}{24}\selectfont
+    \color{color1}
+    \raggedleft
+    左昊天\\
+    2024-09-06 \\
+    \href{https://github.com/eric041224/tool_class_2024_sum}{Github 仓库地址}\\ 
+    
+    \end{textblock}
+
+   
+\end{center}
+
+\thispagestyle{empty}
+
+\newpage
+\color{black}
+\section{Python基础}
+\setcounter{page}{1} %从这开始页面编号
+\subsection{输出语句}
+\subsubsection{单行输出}
+\begin{lstlisting}
+print("这是输出的语句")
+\end{lstlisting}
+print中可以用单引号或双引号，但若想输出的内容中存在同样的引号，会和输出语句的的引号产生歧义。\\
+\textbf{解决方法1：}print语句和内容用不同的引号\\
+\textbf{解决方法2：}在内容的引号前加转义字符\verb|\|
+\begin{lstlisting}
+print("I'm fine.")
+print('Let\'s go!')
+\end{lstlisting}
+\subsubsection{多行输出}
+使用三引号进行多行输出
+\begin{lstlisting}
+print('''我相信能再次看到蓝天，
+鲜花挂满枝头''')
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/print1.png}
+
+\subsection{解一元二次方程}
+乘方为**  根号可以用**(1/2)或使用math库
+\begin{lstlisting}
+import math
+a=int(input("请输入a的值"))
+b=int(input("请输入b的值"))
+c=int(input("请输入c的值"))
+print((-b+math.sqrt(b**2-4*a*c))/(2*a))
+print((-b-math.sqrt(b**2-4*a*c))/(2*a))
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/math.png}
+
+\subsection{for循环与字典}
+\subsubsection{普通循环}
+\begin{lstlisting}
+total=0
+for i in range(1,11):
+    total=total+i
+print(total)
+\end{lstlisting}
+\textbf{注：1、python的缩进非常严格，通过缩进判断循环是否结束。}\\
+\textbf{2、range的范围左闭右开}\\
+\includegraphics[width=1\textwidth]{./python/for1.png}
+
+\subsubsection{对字典的循环}
+\begin{lstlisting}
+a = {"小王":"123456789","小李":"15462847","小张":"4535415"}
+for name,phone in a.items():
+    print(name+phone)
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/for2.png}
+\textbf{关于字典：}\\
+1、字典是键值对\\
+2、a.keys()返回所有键，a.values()返回所有值，a.items()返回所有键值对
+
+\subsection{while循环}
+\begin{lstlisting}
+i=0
+total=0
+while i<11:
+    total=total+i
+    i=i+1
+print(total)
+\end{lstlisting}
+
+\subsection{格式化字符串}
+方法一：
+\begin{lstlisting}
+name="小王"
+print(f"你好{name}")
+\end{lstlisting}
+
+方法二：
+\begin{lstlisting}
+name="小王"
+print("你好{0}".format(name))
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/format.png}
+
+\subsection{函数}
+\begin{lstlisting}
+def calculate(a):
+    s=a*a
+    return s
+a=float(input("请输入正方形的边长"))
+s=calculate(a)
+print(f"边长为{a}的正方形的面积为： {s}")
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/function.png}
+
+\subsection{类}
+\subsubsection{创建类以及类的实例化}
+\begin{lstlisting}
+class Student:
+    def __init__(self,name,number,grade): #构造函数
+        self.name = name
+        self.number = number
+        self.grade = grade
+    def showStudent(self):
+        print("姓名："+self.name+" 学号："+self.number+" 年级："+self.grade)
+
+wang = Student("小王","1","9") #对象的初始化
+wang.showStudent()
+\end{lstlisting}
+\textbf{注：构造函数的下划线是两个下划线并非一个！}\\
+\includegraphics[width=1\textwidth]{./python/class.png}
+\subsubsection{类的继承}
+\begin{lstlisting}
+class People:
+    def __init__(self,name,age): #构造函数
+        self.name = name
+        self.age = age
+
+class Student(People):
+    def __init__(self,name,age,number,grade): #构造函数
+        super().__init__(name,age) 
+        self.number = number
+        self.grade = grade
+    def showStudent(self):
+        print("姓名："+self.name+" 年龄："+self.age+" 学号："+self.number+" 年级："+self.grade)
+
+wang = Student("小王","14","1","9") #对象的初始化
+wang.showStudent()
+    \end{lstlisting}
+\textbf{解释：}\\
+1、\verb|super()|会返回当前类的父类，可以用此函数调用父类的构造函数。\\
+2、\verb|class Student(People)|中括号的内容表示继承的父类。\\
+\includegraphics[width=1\textwidth]{./python/inherit.png}
+
+\subsection{文件的读写}
+打开文件的代码:
+\begin{lstlisting}
+    open("./test.txt","r",encoding="utf-8")
+\end{lstlisting}
+1、其中第一个引号中表示文件的地址\\
+2、第二个引号中表示要对文件进行什么操作\\
+3、encoding表示文件的编码方式\\
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+    第二个引号中的内容 & 可对文件进行的操作\\
+    \hline
+    r & 只读\\
+    w & 只写（覆盖之前的内容）\\
+    a & 只写（在已有内容后面添加）\\
+    r+ & 读和写（覆盖之前的内容）\\
+    a+ & 读和写（追加写）\\
+    \hline
+\end{tabular}
+\end{table}
+\subsubsection{文件的读}
+.read()返回文件全部内容\par
+.readline()返回文件的一行内容\par
+.readlines()返回文件所有内容组成的列表\par
+\subsubsection{实例}
+\begin{lstlisting}
+f=open("C:\\Users\\19355\\Desktop\\大二暑假\\系统开发工具基础\\1\\tool_class_2024_sum\\week3\\python\\test.txt","a",encoding="utf-8")
+f.write("——— 流浪地球")
+f.close()
+
+f=open("C:\\Users\\19355\\Desktop\\大二暑假\\系统开发工具基础\\1\\tool_class_2024_sum\\week3\\python\\test.txt","r",encoding="utf-8")
+print(f.read())
+f.close()
+
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/file1.png}
+
+\section{Python视觉应用}
+
+\end{document}
