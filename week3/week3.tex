@@ -332,6 +332,22 @@ f.close()
 \end{lstlisting}
 \includegraphics[width=1\textwidth]{./python/file1.png}
 
+\subsection{猜数字}
+\begin{lstlisting}
+import random
+random_int = random.randint(1,10)
+num = int(input("请输入一个1-10的数"))
+while num != random_int:
+    if num > random_int:
+        print("猜大了")
+    else:
+        print("猜小了")
+    num = int(input("请输入一个1-10的数"))
+
+print("恭喜你猜对了")
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./python/game.png}
+
 \section{Python视觉应用}
 \subsection{绘制图像、点、线}
 \begin{lstlisting}
