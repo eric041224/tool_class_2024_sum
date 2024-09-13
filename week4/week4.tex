@@ -1,0 +1,296 @@
+\documentclass[UTF8,a4paper]{ctexart}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[margin=1.5in]{geometry}
+\usepackage{float}
+\usepackage{listings} 
+\usepackage{fancyhdr} %用于调整页眉的样式
+\usepackage{fancyvrb} 
+\usepackage{tabularx}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}%用于插入超链接
+\usepackage{wallpaper}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage[absolute]{textpos}
+\usetikzlibrary{calc}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+
+
+
+\definecolor{color1}{RGB}{10,80,179}
+\pagestyle{fancy}
+\fancyhead[L]{\url{https://github.com/eric041224/tool_class_2024_sum}}
+\setlength{\headheight}{27pt}
+
+\definecolor{GradientTop}{RGB}{0,0,255}
+\definecolor{GradientBottom}{RGB}{255,0,0}
+\colorlet{GradientMid}{blue!50!red}
+
+\lstset{
+    numbers=left,
+    numberstyle=\tiny,
+    frame=shadowbox,
+    rulesepcolor= \color{ red!20!green!20!blue!20},
+    escapeinside=``,
+    xleftmargin=2em,aboveskip=1em,
+    framexleftmargin=2em,
+    breaklines=true
+}
+
+\hypersetup{
+    colorlinks=true,            % 激活链接颜色，去掉链接边框
+    urlcolor=color1           % 外部URL链接颜色
+}
+
+\begin{document}
+%封面
+\ThisCenterWallPaper{1.02}{background.png} 
+\begin{textblock}{5}(1,2)
+    % 设置字号为20pt
+    \fontsize{15}{24}\selectfont
+    \color{white}
+    \begin{turn}{270}
+         \qquad 取则行远
+        \end{turn}
+        \begin{turn}{270}
+            海纳百川 
+            \end{turn}
+    
+    \end{textblock}
+\begin{center}
+    %logo
+    \begin{tikzpicture}[remember picture, overlay]
+        % 绘制一个矩形，并设置其位置在页面的右上角
+        \draw[fill=blue] (current page.north east) rectangle (current page.north west);
+        % 在矩形中插入图片，并设置与右上角的距离
+        \node[anchor=north east, xshift=-1cm, yshift=-2cm] at (current page.north east) {
+            \includegraphics[width=6cm]{logo.png}
+        };
+    \end{tikzpicture}
+
+\begin{textblock}{5}(1,24)
+    
+    \fontsize{120}{24}\selectfont
+    \color{color1}
+    Week4
+       
+    
+    \end{textblock}
+
+\begin{textblock}{5}(14.5,24)
+    
+    \fontsize{19}{24}\selectfont
+    \color{color1}
+    \raggedleft
+    左昊天\\
+    2024-09-13 \\
+    \href{https://github.com/eric041224/tool_class_2024_sum}{Github 仓库地址}\\ 
+    
+    \end{textblock}
+
+   
+\end{center}
+
+\thispagestyle{empty}
+
+\newpage
+\color{black}
+\section{调试与性能分析}
+\subsection{打印颜色}
+\begin{lstlisting}
+#!/usr/bin/env bash
+for R in $(seq 0 20 255); do
+    for G in $(seq 0 20 255); do
+        for B in $(seq 0 20 255); do
+            printf "\e[38;2;${R};${G};${B}m█\e[0m";
+        done
+    done
+done
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/color.png}
+
+\subsection{使用 Linux 上的 journalctl 或 macOS 上的 log show 命令来获取最近一天中超级用户的登录信息及其所执行的指令。如果找不到相关信息，您可以执行一些无害的命令，例如 sudo ls 然后再次查看。}
+\begin{table}[H]
+\includegraphics[width=1\textwidth]{./pictures/log.png}
+\end{table}
+\subsection{pdb调试器}
+l(ist) - 显示当前行附近的 11 行或继续执行之前的显示；\par
+s(tep) - 执行当前行，并在第一个可能的地方停止；\par
+n(ext) - 继续执行直到当前函数的下一条语句或者 return 语句；\par
+b(reak) - 设置断点（基于传入的参数）；\par
+p(rint) - 在当前上下文对表达式求值并打印结果。还有一个命令是 pp ，它使用 pprint 打印；\par
+r(eturn) - 继续执行直到当前函数返回；\par
+q(uit) - 退出调试器。\\
+\textbf{这里使用的是ipdb，它是pdb的增强版本，相较于pdb有直观的界面显示。}\\
+\includegraphics[width=1\textwidth]{./pictures/bug1.png}
+c命令代表继续执行，直到出现错误。\\
+\includegraphics[width=1\textwidth]{./pictures/bug2.png}
+使用p locals()命令，可以查看此时所有变量的值，用此进行错误分析。\\
+\includegraphics[width=1\textwidth]{./pictures/bug3.png}
+\subsection{计时}
+使用time库中的time函数
+\begin{lstlisting}
+import time, random
+n = random.randint(1, 10) * 100
+
+# 获取当前时间 
+start = time.time()
+
+# 执行一些操作
+print("Sleeping for {} ms".format(n))
+time.sleep(n/1000)
+
+# 比较当前时间和起始时间
+print(time.time() - start)
+
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/time.png}
+
+\subsection{memory-profiler}
+使用memory-profiler模块对内存进行监控。\\
+实例代码：
+\begin{lstlisting}
+@profile
+def my_func():
+    a = [1] * (10 ** 6)
+    b = [2] * (2 * 10 ** 7)
+    del b
+    return a
+
+if __name__ == '__main__':
+    my_func()
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/内存.png}
+
+\subsection{shellcheck}
+shellcheck是一个静态的脚本分析工具，它可以得到程序错误的原因。
+\begin{lstlisting}
+    shellcheck 文件名
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/shellcheck1.png}
+此代码的问题是开头没有声明使用的shell类型。需加上\verb|#!/bin/bash|
+
+\subsection{这里有一些用于计算斐波那契数列 Python 代码，它为计算每个数字都定义了一个函数。将代码拷贝到文件中使其变为一个可执行的程序。首先安装 pycallgraph 和 graphviz(如果您能够执行 dot, 则说明已经安装了 GraphViz.)。并使用 pycallgraph graphviz -- ./fib.py 来执行代码并查看 pycallgraph.png 这个文件。fibN 被调用了多少次？我们可以通过记忆法来对其进行优化。将注释掉的部分放开，然后重新生成图片。这回每个 fibN 函数被调用了多少次？}
+\begin{lstlisting}
+#!/usr/bin/env python
+def fib0(): return 0
+
+def fib1(): return 1
+
+s = """def fib{}(): return fib{}() + fib{}()"""
+
+if __name__ == '__main__':
+
+    for n in range(2, 10):
+        exec(s.format(n, n-1, n-2))
+    # from functools import lru_cache
+    # for n in range(10):
+    #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
+    print(eval("fib9()")) 
+\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{./python/pycallgraph1.png}
+    \caption{放开注释前}
+    \textbf{\textcolor{color1}{被调用101次}}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{./python/pycallgraph2.png}
+    \caption{放开注释后}
+    \textbf{\textcolor{color1}{被调用10次}}
+\end{figure}
+
+
+\subsection{遇到的问题：无法安装pycallgraph}
+一开始根据提示，尝试回退setuptools版本，发现没有用。在网上不断搜索，找到解决方法，安装时用pip install pycallgraph2命令就可以安装了。
+
+\section{元编程}
+
+
+\section{pytorch}
+\subsection{引入库}
+\begin{lstlisting}
+from __future__ import print_function
+import torch
+\end{lstlisting}
+\textbf{注：以下代码均省略引入库的代码。}
+\subsection{随机生成 a × b 的矩阵}
+\begin{lstlisting}
+rand_x = torch.rand(a, b)
+print(rand_x)
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/tensor1.png}
+（此为5×3的矩阵）
+\subsection{创建数值都是0,类型为long的矩阵}
+\begin{lstlisting}
+zero_x = torch.zeros(a, b, dtype=torch.long)
+print(zero_x)
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/tensor2.png}
+\subsection{保留相同的尺寸大小，并修改数据类型}
+\begin{lstlisting}
+tensor1 = torch.zeros(3, 4, dtype=torch.long)
+tensor2 = torch.randn_like(tensor1, dtype=torch.float)
+print('tensor1: ', tensor1)
+print('tensor2: ', tensor2)
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/tensor3.png}
+\subsection{修改tensor的尺寸}
+\begin{lstlisting}
+x = torch.randn(3, 6)
+y = x.view(18)
+# -1 表示除给定维度外的其余维度的乘积
+z = x.view(-1, 9)
+print(x.size(), y.size(), z.size())
+\end{lstlisting}
+解释：z矩阵的列计算方式：\\
+x是4×4的，所以总共有18个。z的列乘以行数（9）等于18，所以z的列数为2。
+\includegraphics[width=1\textwidth]{./pictures/tensor4.png}
+
+\subsection{Tensor 的加法}
+三种方式：\par
+1、\verb|+|\par
+2、\verb|torch.add(tensor1, tensor2)|\par
+3、\verb|tensor1.add_(tensor2)|，该方法会直接修改tensor1变量的值\\
+\includegraphics[width=1\textwidth]{./pictures/加法.png}
+
+\subsection{Tensor 转换为 Numpy 数组}
+\begin{lstlisting}
+a = torch.ones(5)
+print(a)
+b = a.numpy()
+print(b)
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/tensor5.png}
+\subsection{Numpy 数组转换为 Tensor}
+\begin{lstlisting}
+import numpy as np
+a = np.ones(5)
+b = torch.from_numpy(a)
+np.add(a, 1, out=a)
+print(a)
+print(b)
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/tensor6.png}
+\subsection{CUDA 张量}
+\begin{lstlisting}
+x = torch.randn(4, 4)
+
+# 当 CUDA 可用的时候，可以使用下方这段代码，采用 torch.device() 方法来改变 tensors 是否在 GPU 上进行计算操作
+if torch.cuda.is_available():
+    device = torch.device("cuda")          # 定义一个 CUDA 设备对象
+    y = torch.ones_like(x, device=device)  # 创建一个在 GPU 上的 tensor
+    x = x.to(device)                       # 将 x 移动到 GPU
+    z = x + y
+    print(z)
+    print(z.to("cpu", torch.double))       # 将 z 移动到 CPU 并改变数值类型
+else:
+    print("CUDA is not available")
+\end{lstlisting}
+\includegraphics[width=1\textwidth]{./pictures/tensor7.png}
+第一个结果是在gpu上运行的，第二个结果是在cpu上运行的。
+\end{document}

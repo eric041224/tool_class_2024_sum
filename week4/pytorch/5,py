@@ -1,0 +1,6 @@
+from __future__ import print_function
+import torch
+a = torch.ones(6)
+print(a)
+b = a.numpy()
+print(b)
