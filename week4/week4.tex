@@ -209,6 +209,90 @@ if __name__ == '__main__':
 一开始根据提示，尝试回退setuptools版本，发现没有用。在网上不断搜索，找到解决方法，安装时用pip install pycallgraph2命令就可以安装了。
 
 \section{元编程}
+\subsection{makefile的写法}
+\begin{lstlisting}
+paper.pdf: paper.tex plot-data.png
+pdflatex paper.tex
+
+plot-%.png: %.dat plot.py
+	plot.py -i $*.dat -o $@
+\end{lstlisting}
+冒号左侧的是构建目标，冒号右侧的是构建它所需的依赖。缩进的部分是构建时用到的命令
+
+\subsection{生成图片的规则，和latex的写法}
+\subsubsection{python（用于生成图片）}
+\begin{lstlisting}
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', type=argparse.FileType('r'))
+parser.add_argument('-o')
+args = parser.parse_args()
+
+data = np.loadtxt(args.i)
+plt.plot(data[:, 0], data[:, 1])
+plt.savefig(args.o)
+\end{lstlisting}
+\subsubsection{latex（将生成的图片放入latex中）}
+\begin{lstlisting}
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\includegraphics[scale=0.65]{plot-data.png}
+\end{document}
+\end{lstlisting}
+\subsubsection{.dat 数据文件}
+\begin{lstlisting}
+1 1
+2 2
+3 3
+4 4
+5 8
+\end{lstlisting}
+\subsection{make语句}
+make后不加参数将会构建plot-data.png和paper.pdf文件；
+但，如果make后加参数，比如make plot-data.png则只会构建这一个文件。
+当然，只有在图片文件存在的情况下，才可以单独构建paper.pdf文件。
+生成的图片：\\
+\includegraphics[width=1\textwidth]{./makefile/plot-data.png}
+latex生成的pdf：\\
+\includegraphics[width=1\textwidth]{./pictures/pdf.png}
+\subsection{遇到的问题}
+一开始一直报错，试了很多办法都没有解决。最开始使用的是windows shell，所以没有察觉出路径有什么问题
+后来先去做别的，再返回来做这个时发现，在git bash中会出现无法显示的内容，考虑是中文引起的。将所有路径的中文改成英文后可以运行了。
+同时makefile里其实是可以用相对路径的，但由于一开始使用的是绝对路径，才导致中文路径造成的影响。经测试，用相对路径时，路径中的中文不影响代码运行。\\
+\includegraphics[width=1\textwidth]{./pictures/makefile1.png}
+
+\subsection{大多数的 makefiles 都提供了 一个名为 clean 的构建目标，这并不是说我们会生成一个名为clean的文件，而是我们可以使用它清理文件，让 make 重新构建。您可以理解为它的作用是“撤销”所有构建步骤。在上面的 makefile 中为paper.pdf实现一个clean 目标。您需要构建phony。}
+修改后的代码：
+\begin{lstlisting}
+paper.pdf: paper.tex plot-data.png
+	pdflatex paper.tex
+
+plot-%.png: %.dat plot.py
+	./plot.py -i $*.dat -o $@
+
+.PHONY: clean
+clean:
+	rm *.pdf *.aux *.log *.png    
+\end{lstlisting}
+当文件存在，并且数据没有任何更新时，输入make命令并不会重新构建文件。\\
+\includegraphics[width=1\textwidth]{./pictures/makefile3.png}
+这时就体现\verb|.PHONY|的作用了，\verb|.PHONY|是用于声明伪目标的关键字。伪目标不是文件。
+如果目标与实际文件同名，make 可能会认为目标是已经存在的，不需要重新执行。如果存在名为 clean 的文件，make clean 将不会执行 clean 目标，因为 make 认为 clean 已经是一个文件。使用 \verb|.PHONY: clean|，make 会忽略文件的存在，强制执行 clean 目标。
+在这里make clean命令用于删除前面make构建的文件。\\
+\includegraphics[width=1\textwidth]{./pictures/clean.png}
+
+\subsection{版本号}
+\textbf{主版本号.次版本号.补丁号}\\
+关于版本号的规则：\\
+如果新的版本没有改变 API，递增补丁号；\\
+如果添加了 API 并且该改动是向后兼容的，递增次版本号；\\
+如果修改了 API 但是它并不向后兼容，递增主版本号。\\
+
 
 
 \section{pytorch}
@@ -293,4 +377,14 @@ else:
 \end{lstlisting}
 \includegraphics[width=1\textwidth]{./pictures/tensor7.png}
 第一个结果是在gpu上运行的，第二个结果是在cpu上运行的。
+\subsection{遇到的问题：}
+一直报错，说缺少某dll文件，无法运行pytorch，但可以引入torch库。但打开这个文件夹，里面的确是有这个dll文件的。在网上寻找解决方案，下载了新的dll文件放入文件夹内也依然报错。
+也考虑过是环境没配置好，重新下载安装了cuda，配置了python的路径等方法都无效。
+网上的各种方案都试了一下，都没用。最后尝试重装pytorch，再次运行后发现居然可以了。\par
+可能导致问题的原因：第一次下载的时候看到进度条到\verb|100%|就关闭了，导致东西虽然是下完了，但是配置还没完成。
+\section{关于本课的感想}
+这门课我认为是除了编程课之外最实用的一门课，虽然它没有教我们什么“硬知识”，也只有0.5学分，但它让我们知道了git、latex的存在，让我们学习了shell、命令行、vim的使用，ipdb的调试等等。
+老师上课提点一些相关内容，并让我们自己尝试，完成实验、报告的形式也让我们提高了自学能力、独立思考能力。在发现问题并解决问题后，会产生许多的满足感。
+并且在《程序设计基础实践》这门课中，我们小组已经全流程使用git进行协同开发了，在开发中我们也深刻体会到了这些工具的重要性。\\
+\includegraphics[width=1\textwidth]{./pictures/git.png}
 \end{document}
